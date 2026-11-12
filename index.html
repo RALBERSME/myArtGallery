@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meine Bleistiftzeichnungen 2026</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #141413;
+        color: #1c1c1a;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      h1,
+      h2,
+      .serif {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 400;
+      }
+
+      #entrance {
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        background-color: #181817;
+        background-image: radial-gradient(
+          circle at 50% 45%,
+          #262624 0%,
+          #121211 100%
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition:
+          transform 1.4s cubic-bezier(0.76, 0, 0.24, 1),
+          opacity 1.1s ease;
+      }
+
+      .welcome-plaque {
+        text-align: center;
+        margin-bottom: 50px;
+        padding: 25px 45px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      .welcome-plaque .subtitle {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.35em;
+        color: #8e8d8a;
+        margin-bottom: 12px;
+      }
+
+      .welcome-plaque h1 {
+        font-size: 2.8rem;
+        color: #eae8e3;
+        letter-spacing: 0.08em;
+      }
+
+      .portal-doorway {
+        width: 170px;
+        height: 270px;
+        border-radius: 85px 85px 0 0;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        background: linear-gradient(180deg, #e5e2dc 0%, #c8c4bc 100%);
+        box-shadow:
+          0 30px 70px rgba(0, 0, 0, 0.7),
+          inset 0 10px 30px rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        padding-bottom: 35px;
+        transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        overflow: hidden;
+      }
+
+      .portal-doorway::before {
+        content: "";
+        position: absolute;
+        inset: 6px 6px 0 6px;
+        border-radius: 80px 80px 0 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
+        border-left: 1px solid rgba(0, 0, 0, 0.2);
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
+        pointer-events: none;
+      }
+
+      .portal-doorway span {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        color: #1c1c1a;
+        border-bottom: 1px solid transparent;
+        padding-bottom: 4px;
+        transition: all 0.4s ease;
+      }
+
+      .portal-doorway:hover {
+        transform: translateY(-4px);
+        background: linear-gradient(180deg, #f5f3ef 0%, #dcd8d0 100%);
+        box-shadow:
+          0 35px 80px rgba(0, 0, 0, 0.85),
+          0 0 40px rgba(255, 255, 255, 0.08);
+      }
+
+      .portal-doorway:hover span {
+        letter-spacing: 0.32em;
+        border-bottom-color: #1c1c1a;
+      }
+
+      .entered {
+        transform: scale(4);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #gallery-wrapper {
+        display: none;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      nav {
+        background: rgba(244, 242, 238, 0.92);
+        backdrop-filter: blur(12px);
+        padding: 22px 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+
+      .gallery-brand {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.2rem;
+        letter-spacing: 0.12em;
+        color: #1c1c1a;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 35px;
+      }
+
+      .nav-btn {
+        background: none;
+        border: none;
+        font-family: "Inter", sans-serif;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #777672;
+        cursor: pointer;
+        padding-bottom: 5px;
+        border-bottom: 1px solid transparent;
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover,
+      .nav-btn.active {
+        color: #1c1c1a;
+        border-bottom-color: #1c1c1a;
+      }
+
+      .room {
+        display: none;
+        min-height: calc(100vh - 68px);
+        padding: 70px 6% 110px 6%;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        animation: roomFade 0.9s ease;
+      }
+
+      .room.active {
+        display: flex;
+      }
+
+      @keyframes roomFade {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .room-intro {
+        max-width: 680px;
+        text-align: center;
+        margin-bottom: 70px;
+      }
+
+      .room-intro .room-number {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        opacity: 0.6;
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .room-intro h2 {
+        font-size: 2.4rem;
+        margin-bottom: 14px;
+      }
+
+      .room-intro p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        opacity: 0.75;
+        font-weight: 300;
+      }
+
+      .artwork {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .frame {
+        background-color: #f9f8f6;
+        box-shadow:
+          0 22px 40px -12px rgba(0, 0, 0, 0.28),
+          0 4px 12px rgba(0, 0, 0, 0.12),
+          inset 0 0 12px rgba(0, 0, 0, 0.06);
+        transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .frame:hover {
+        transform: translateY(-4px);
+      }
+
+      .canvas-box {
+        width: 100%;
+        height: 100%;
+        background-color: #f4f3ef;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      .canvas-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(100%) contrast(106%);
+        display: block;
+      }
+
+      .placeholder {
+        font-size: 0.75rem;
+        color: #888;
+        text-align: center;
+        padding: 15px;
+        letter-spacing: 0.05em;
+      }
+
+      .caption {
+        margin-top: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-size: 0.78rem;
+        opacity: 0.85;
+      }
+
+      .caption strong {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+      }
+
+      .caption span {
+        font-size: 0.72rem;
+        opacity: 0.7;
+      }
+
+      .floor-base {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 36px;
+        border-top: 2px solid rgba(0, 0, 0, 0.25);
+      }
+
+      #room-1 {
+        background-color: #dcd8d0;
+        background-image: radial-gradient(
+          circle at 50% 20%,
+          #e6e3dc 0%,
+          #cfcbc2 100%
+        );
+        color: #1c1c1a;
+      }
+
+      #room-1 .frame {
+        border: 10px solid #1e1d1b;
+        padding: 38px;
+      }
+
+      #room-1 .floor-base {
+        background-color: #b8b3a8;
+      }
+
+      .layout-room-1 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(320px, 460px));
+        gap: 80px;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .layout-room-1 .frame {
+        aspect-ratio: 3 / 4;
+      }
+
+      #room-2 {
+        background-color: #c7ccc4;
+        background-image: radial-gradient(
+          circle at 50% 25%,
+          #d4d9d1 0%,
+          #b8beb5 100%
+        );
+        color: #1b1d1a;
+      }
+
+      #room-2 .frame {
+        border: 7px solid #594a3c;
+        padding: 18px;
+      }
+
+      #room-2 .floor-base {
+        background-color: #9ea49b;
+      }
+
+      .layout-room-2 {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 32px;
+        max-width: 1150px;
+        width: 100%;
+        align-items: center;
+      }
+
+      .animal-1 {
+        grid-column: 1 / 4;
+      }
+      .animal-1 .frame {
+        aspect-ratio: 1 / 1;
+      }
+
+      .animal-2 {
+        grid-column: 4 / 8;
+      }
+      .animal-2 .frame {
+        aspect-ratio: 4 / 3;
+      }
+
+      .animal-3 {
+        grid-column: 8 / 10;
+      }
+      .animal-3 .frame {
+        aspect-ratio: 3 / 4;
+      }
+
+      .animal-4 {
+        grid-column: 10 / 13;
+      }
+      .animal-4 .frame {
+        aspect-ratio: 4 / 5;
+      }
+
+      .animal-5 {
+        grid-column: 2 / 5;
+      }
+      .animal-5 .frame {
+        aspect-ratio: 3 / 4;
+      }
+
+      .animal-6 {
+        grid-column: 5 / 9;
+      }
+      .animal-6 .frame {
+        aspect-ratio: 16 / 10;
+      }
+
+      .animal-7 {
+        grid-column: 9 / 12;
+      }
+      .animal-7 .frame {
+        aspect-ratio: 1 / 1;
+      }
+
+      #room-3 {
+        background-color: #2b2d2f;
+        background-image: radial-gradient(
+          circle at 50% 20%,
+          #36393c 0%,
+          #202224 100%
+        );
+        color: #eae8e3;
+      }
+
+      #room-3 .frame {
+        border: 6px solid #d8d6d0;
+        padding: 26px;
+        box-shadow: 0 28px 50px rgba(0, 0, 0, 0.55);
+      }
+
+      #room-3 .floor-base {
+        background-color: #18191b;
+        border-top-color: rgba(255, 255, 255, 0.08);
+      }
+
+      .layout-room-3 {
+        display: grid;
+        grid-template-columns: 1.1fr 1.6fr 0.9fr;
+        gap: 55px;
+        max-width: 1200px;
+        width: 100%;
+        align-items: center;
+      }
+
+      .tri-1 .frame {
+        aspect-ratio: 3 / 4;
+      }
+      .tri-2 .frame {
+        aspect-ratio: 4 / 3;
+      }
+      .tri-3 .frame {
+        aspect-ratio: 2 / 3;
+      }
+      @media (max-width: 900px) {
+        .layout-room-1,
+        .layout-room-3 {
+          grid-template-columns: 1fr;
+          max-width: 450px;
+        }
+        .layout-room-2 {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .layout-room-2 > div {
+          grid-column: auto !important;
+        }
+        nav {
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+      .artwork {
+        position: relative;
+        z-index: 1;
+        transition: z-index 0s linear 0.4s;
+      }
+
+      .artwork.is-zoomed {
+        z-index: 40;
+        transition: z-index 0s;
+      }
+
+      .artwork:not(.no-zoom) .frame {
+        cursor: zoom-in;
+        transition:
+          transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.45s ease;
+        will-change: transform;
+      }
+
+      .artwork.no-zoom .frame {
+        cursor: default;
+      }
+
+      .artwork.is-zoomed .frame {
+        box-shadow:
+          0 35px 80px rgba(0, 0, 0, 0.55),
+          0 10px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      @media (max-width: 900px) {
+        .layout-room-2 > article {
+          grid-column: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section id="entrance">
+      <div class="welcome-plaque">
+        <div class="subtitle">Graphit &amp; Kohle-Zeichnungen</div>
+        <h1>KUNSTGALERIE</h1>
+      </div>
+
+      <div class="portal-doorway" onclick="enterGallery()">
+        <span>Bitte einzutreten!</span>
+      </div>
+    </section>
+
+    <div id="gallery-wrapper">
+      <nav>
+        <div class="gallery-brand">Galerie</div>
+        <div class="nav-links">
+          <button class="nav-btn active" onclick="switchRoom(1)">
+            Saal I · Hauptwerke
+          </button>
+          <button class="nav-btn" onclick="switchRoom(2)">
+            Saal II · Tierstudien
+          </button>
+          <button class="nav-btn" onclick="switchRoom(3)">
+            Saal III · Am Meer
+          </button>
+        </div>
+      </nav>
+
+      <section id="room-1" class="room active">
+        <div class="room-intro">
+          <span class="room-number">Saal I</span>
+        </div>
+
+        <div class="layout-room-1">
+          <article class="artwork no-zoom">
+            <div class="frame">
+              <div class="canvas-box">
+                <div class="placeholder">
+                  <img src="Images/Birke.png" alt="Birke" />
+                </div>
+              </div>
+            </div>
+            <div class="caption">
+              <strong>Winterlandschaft</strong>
+            </div>
+          </article>
+
+          <article class="artwork no-zoom">
+            <div class="frame">
+              <div class="canvas-box">
+                <div class="placeholder">
+                  <img src="Images/Storch.png" alt="Storch" />
+                </div>
+              </div>
+            </div>
+            <div class="caption">
+              <strong>Storch am See</strong>
+            </div>
+          </article>
+        </div>
+        <div class="floor-base"></div>
+      </section>
+
+      <section id="room-2" class="room">
+        <div class="room-intro">
+          <span class="room-number">Saal II</span>
+          <h2>Tierstudien</h2>
+        </div>
+
+        <div class="layout-room-2">
+          <article class="artwork animal-1">
+            <div class="frame">
+              <div class="canvas-box">
+                <div class="placeholder">
+                  <img src="Images/Tiger.png" alt="Tiger" />
+                </div>
+              </div>
+            </div>
+            <div class="caption">
+              <strong>Tiger</strong>
+            </div>
+          </article>
+
+          <article class="artwork animal-2">
+            <div class="frame">
+              <div class="canvas-box">
+                <div class="placeholder">
+                  <img src="Images/Hund.png" alt="Hund" />
+                </div>
+              </div>
+            </div>
+            <div class="caption">
+              <strong>Hund</strong>
+            </div>
+          </article>
+
+          <article class="artwork animal-3">
+            <div class="frame">
+              <div class="canvas-box">
+                <div class="placeholder">
+                  <img src="Images/Papagei.png" alt="Papagei" />
+                </div>
+              </div>
+            </div>
+            <div class="caption">
+              <strong>Papagei</strong>
+            </div>
+          </article>
+
+          <article class="artwork animal-4">
+            <div class="frame">
+              <div class="canvas-box">
+                <div class="placeholder">
+                  <img src="Images/Küken.png" alt="Küken" />
+                </div>
+              </div>
+            </div>
+            <div class="caption">
+              <strong>Küken</strong>
+            </div>
+          </article>
+
+          <article class="artwork animal-5">
+            <div class="frame">
+              <div class="canvas-box">
+                <div class="placeholder">
+                  <img src="Images/Pferd.png" alt="Pferd" />
+                </div>
+              </div>
+            </div>
+            <div class="caption">
+              <strong>Pferd</strong>
+            </div>
+          </article>
+
+          <article class="artwork animal-6">
+            <div class="frame">
+              <div class="canvas-box">
+                <div class="placeholder">
+                  <img src="Images/Biene.png" alt="Biene" />
+                </div>
+              </div>
+            </div>
+            <div class="caption">
+              <strong>Biene</strong>
+            </div>
+          </article>
+
+          <article class="artwork animal-7">
+            <div class="frame">
+              <div class="canvas-box">
+                <div class="placeholder">
+                  <img src="Images/Kaninchen.png" alt="Kaninchen" />
+                </div>
+              </div>
+            </div>
+            <div class="caption">
+              <strong>Kaninchen</strong>
+            </div>
+          </article>
+        </div>
+        <div class="floor-base"></div>
+      </section>
+
+      <section id="room-3" class="room">
+        <div class="room-intro">
+          <span class="room-number">Saal III</span>
+          <h2>Am Meer</h2>
+        </div>
+
+        <div class="layout-room-3">
+          <article class="artwork tri-1">
+            <div class="frame">
+              <div class="canvas-box">
+                <div class="placeholder">
+                  <img src="Images/Pinguin.png" alt="Pinguin" />
+                </div>
+              </div>
+            </div>
+            <div class="caption">
+              <strong>Pinguin</strong>
+            </div>
+          </article>
+
+          <article class="artwork tri-2 no-zoom">
+            <div class="frame">
+              <div class="canvas-box">
+                <div class="placeholder">
+                  <img src="Images/Ocean.png" alt="Ocean" />
+                </div>
+              </div>
+            </div>
+            <div class="caption">
+              <strong>Ozean</strong>
+            </div>
+          </article>
+
+          <article class="artwork tri-3">
+            <div class="frame">
+              <div class="canvas-box">
+                <div class="placeholder">
+                  <img src="Images/Seepferdchen.png" alt="Seepferdchen" />
+                </div>
+              </div>
+            </div>
+            <div class="caption">
+              <strong>Seepferdchen</strong>
+            </div>
+          </article>
+        </div>
+        <div
+          class="floor-base"
+          style="
+            margin: 15px;
+            padding: 15px;
+            padding-bottom: 25px;
+            font-family:
+              Cormorant Garamond,
+              serif;
+          "
+        >
+          Reinhild's myGallery - copyright &copy; 2026 all rights reserved
+        </div>
+      </section>
+    </div>
+
+    <script>
+      function enterGallery() {
+        const entrance = document.getElementById("entrance");
+        const gallery = document.getElementById("gallery-wrapper");
+
+        entrance.classList.add("entered");
+        gallery.style.display = "flex";
+
+        setTimeout(() => {
+          entrance.style.display = "none";
+        }, 1300);
+      }
+
+      function switchRoom(roomNumber) {
+        document
+          .querySelectorAll(".artwork.is-zoomed")
+          .forEach((art) => resetZoom(art));
+
+        const rooms = document.querySelectorAll(".room");
+        rooms.forEach((room) => room.classList.remove("active"));
+
+        const buttons = document.querySelectorAll(".nav-btn");
+        buttons.forEach((btn) => btn.classList.remove("active"));
+
+        document.getElementById("room-" + roomNumber).classList.add("active");
+        buttons[roomNumber - 1].classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      const zoomableArtworks = document.querySelectorAll(
+        ".artwork:not(.no-zoom)",
+      );
+
+      function applyZoom(artwork) {
+        const frame = artwork.querySelector(".frame");
+        const rect = frame.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const isMobile = viewportWidth <= 900;
+
+        let scale = 2;
+        let translateX = 0;
+        let translateY = 0;
+
+        if (isMobile) {
+          const maxTargetWidth = viewportWidth * 0.88;
+          const maxTargetHeight = viewportHeight * 0.75;
+          scale = Math.min(
+            maxTargetWidth / rect.width,
+            maxTargetHeight / rect.height,
+            2.2,
+          );
+
+          const screenCenterX = viewportWidth / 2;
+          const frameCenterX = rect.left + rect.width / 2;
+          translateX = (screenCenterX - frameCenterX) / scale;
+        } else {
+          const scaledWidth = rect.width * scale;
+          const overflow = (scaledWidth - rect.width) / 2;
+          const margin = 24;
+
+          if (rect.left - overflow < margin) {
+            translateX = (margin - (rect.left - overflow)) / scale;
+          } else if (rect.right + overflow > viewportWidth - margin) {
+            translateX =
+              (viewportWidth - margin - (rect.right + overflow)) / scale;
+          }
+        }
+
+        const scaledHeight = rect.height * scale;
+        const vOverflow = (scaledHeight - rect.height) / 2;
+        const navHeight = 85;
+        if (rect.top - vOverflow < navHeight) {
+          translateY = (navHeight - (rect.top - vOverflow)) / scale;
+        }
+
+        artwork.classList.add("is-zoomed");
+        frame.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+      }
+
+      function resetZoom(artwork) {
+        const frame = artwork.querySelector(".frame");
+        artwork.classList.remove("is-zoomed");
+        frame.style.transform = "scale(1) translate(0px, 0px)";
+      }
+
+      zoomableArtworks.forEach((artwork) => {
+        artwork.addEventListener("mouseenter", () => {
+          if (window.innerWidth > 900) applyZoom(artwork);
+        });
+
+        artwork.addEventListener("mouseleave", () => {
+          if (window.innerWidth > 900) resetZoom(artwork);
+        });
+
+        artwork.addEventListener("click", (e) => {
+          if (window.innerWidth <= 900) {
+            e.stopPropagation();
+            const alreadyZoomed = artwork.classList.contains("is-zoomed");
+            document
+              .querySelectorAll(".artwork.is-zoomed")
+              .forEach((art) => resetZoom(art));
+            if (!alreadyZoomed) {
+              applyZoom(artwork);
+            }
+          }
+        });
+      });
+
+      document.addEventListener("click", () => {
+        if (window.innerWidth <= 900) {
+          document
+            .querySelectorAll(".artwork.is-zoomed")
+            .forEach((art) => resetZoom(art));
+        }
+      });
+    </script>
+  </body>
+</html>
