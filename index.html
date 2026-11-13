@@ -472,6 +472,7 @@
       .tri-3 .frame {
         aspect-ratio: 2 / 3;
       }
+
       @media (max-width: 900px) {
         .layout-room-1,
         .layout-room-3 {
@@ -548,7 +549,9 @@
             Saal II · Tierstudien
           </button>
           <button class="nav-btn" onclick="switchRoom(3)">
-            Saal III · Am Meer
+            Saal III · Am Meer</button
+          ><button class="nav-btn" onclick="window.location.href = 'room.html'">
+            Saal IV · Mehr
           </button>
         </div>
       </nav>
@@ -563,12 +566,12 @@
             <div class="frame">
               <div class="canvas-box">
                 <div class="placeholder">
-                  <img src="Images/Pudel.png" alt="Birke" />
+                  <img id="pudel" src="Images/Pudel.png" alt="Pudel" />
                 </div>
               </div>
             </div>
             <div class="caption">
-              <strong>Kleiner Pudel</strong>
+              <strong id="pudelName">Kleiner Pudel</strong>
             </div>
           </article>
 
@@ -768,9 +771,31 @@
           Reinhild's myArtGallery - copyright &copy; 2026 all rights reserved
         </div>
       </section>
+      <section id="room-1" class="room active">
+        <div class="room-intro">
+          <span class="room-number">Saal I</span>
+        </div>
+
+        <div class="layout-room-4">
+          <article class="artwork no-zoom">
+            <div class="frame">
+              <div class="canvas-box">
+                <div class="placeholder">
+                  <img id="pudel" src="Images/Pudel.png" alt="Birke" />
+                </div>
+              </div>
+            </div>
+            <div class="caption">
+              <strong id="pudelName">Kleiner Pudel</strong>
+            </div>
+          </article>
+        </div>
+        <div class="floor-base"></div>
+      </section>
     </div>
 
     <script>
+      setTimeout;
       function enterGallery() {
         const entrance = document.getElementById("entrance");
         const gallery = document.getElementById("gallery-wrapper");
