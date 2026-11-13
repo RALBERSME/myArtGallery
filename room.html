@@ -154,13 +154,16 @@
 
         <figcaption class="caption">
           <h2 id="exponat-titel">Titel wird geladen...</h2>
-          <p id="exponat-text">Beschreibung wird geladen...</p>
         </figcaption>
       </figure>
     </main>
 
     <script>
       const exponate = [
+        {
+          src: "Images/Elefant.png",
+          titel: "Elefant",
+        },
         {
           src: "Images/Papagei.png",
           titel: "Papagei",
@@ -177,37 +180,33 @@
           src: "Images/Känguruh.png",
           titel: "Känguruh",
         },
-        ,
         {
           src: "Images/Fox.png",
           titel: "Fuchs",
         },
-        ,
         {
           src: "Images/Cat.png",
           titel: "Katze",
         },
-        ,
+
         {
           src: "Images/Taube.png",
           titel: "Taube",
         },
       ];
 
-      const wechselZeit = 4000;
+      const wechselZeit = 3000;
 
       let aktuellerIndex = 0;
 
       const bildElement = document.getElementById("exponat-bild");
       const titelElement = document.getElementById("exponat-titel");
-      const textElement = document.getElementById("exponat-text");
 
       function zeigeExponat(index) {
         const aktuellesBild = exponate[index];
         bildElement.src = aktuellesBild.src;
         bildElement.alt = aktuellesBild.titel;
         titelElement.textContent = aktuellesBild.titel;
-        textElement.textContent = aktuellesBild.beschreibung;
       }
 
       if (exponate.length > 0) {
